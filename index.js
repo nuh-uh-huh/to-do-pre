@@ -12,12 +12,16 @@ const formElement = document.querySelector(".to-do__form");
 const inputElement = document.querySelector(".to-do__input");
 
 function loadTasks() {
-
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+        return JSON.parse(storedTasks);
+    }
+    return items;
 }
 
 function createItem(item) {
-	const template = document.getElementById("to-do__item-template");
-	const clone = template.content.querySelector(".to-do__item").cloneNode(true);
+  const template = document.getElementById("to-do__item-template");
+  const clone = template.content.querySelector(".to-do__item").cloneNode(true);
   const textElement = clone.querySelector(".to-do__item-text");
   const deleteButton = clone.querySelector(".to-do__item-button_type_delete");
   const duplicateButton = clone.querySelector(".to-do__item-button_type_duplicate");
