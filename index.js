@@ -29,6 +29,11 @@ function createItem(item) {
 
   textElement.textContent = item;
 
+  editButton.addEventListener('click', () => {
+	textElement.contentEditable = "true";
+	textElement.focus();
+  });
+
   deleteButton.addEventListener('click', () => {
 	clone.remove();
 	const currentTasks = getTasksFromDOM();
@@ -41,11 +46,6 @@ function createItem(item) {
 	listElement.prepend(newItem);
 	const currentTasks = getTasksFromDOM();
 	saveTasks(currentTasks);
-  });
-
-  editButton.addEventListener('click', () => {
-	textElement.contentEditable = "true";
-	textElement.focus();
   });
 
   textElement.addEventListener('blur', () => {
