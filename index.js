@@ -70,3 +70,21 @@ function saveTasks(tasks) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+items = loadTasks();
+
+items.forEach((item) => {
+    const itemElement = createItem(item);
+    listElement.append(itemElement);
+});
+
+formElement.addEventListener('submit', (vnt) => {
+  vnt.preventDefault();
+  const taskText = inputElement.value;
+
+  const itemElement = createItem(taskText);
+  listElement.prepend(itemElement);
+  inputElement.value = '';
+
+  const currentTasks = getTasksFromDOM();
+  saveTasks(currentTasks);
+});
