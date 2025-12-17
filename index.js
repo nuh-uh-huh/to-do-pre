@@ -12,11 +12,11 @@ const formElement = document.querySelector(".to-do__form");
 const inputElement = document.querySelector(".to-do__input");
 
 function loadTasks() {
-    const storedTasks = localStorage.getItem('tasks');
-    if (storedTasks) {
-        return JSON.parse(storedTasks);
-    }
-    return items;
+  const storedTasks = localStorage.getItem('tasks');
+  if (storedTasks) {
+	return JSON.parse(storedTasks);
+  }
+  return items;
 }
 
 function createItem(item) {
@@ -27,6 +27,34 @@ function createItem(item) {
   const duplicateButton = clone.querySelector(".to-do__item-button_type_duplicate");
   const editButton = clone.querySelector(".to-do__item-button_type_edit");
 
+  textElement.textContent = item;
+
+  deleteButton.addEventListener('click', () => {
+	clone.remove();
+	const currentTasks = getTasksFromDOM();
+	saveTasks(currentTasks);
+  });
+
+  duplicateButton.addEventListener('click', () => {
+	const newItemText = textElement.textContent;
+	const newItem = createItem(newItemText);
+	listElement.prepend(newItem);
+	const currentTasks = getTasksFromDOM();
+	saveTasks(currentTasks);
+  });
+
+  editButton.addEventListener('click', () => {
+	textElement.contentEditable = "true";
+	textElement.focus();
+  });
+
+  textElement.addEventListener('blur', () => {
+	textElement.contentEditable = "false";
+	const currentTasks = getTasksFromDOM();
+	saveTasks(currentTasks);
+  });
+
+  return clone;
 }
 
 function getTasksFromDOM() {
